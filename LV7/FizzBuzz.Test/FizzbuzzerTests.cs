@@ -1,13 +1,16 @@
 ﻿using NUnit.Framework;
+using System;
 
 namespace FizzBuzz.Test
 { 
     [TestFixture]
     class FizzbuzzerTests
     {
-        [TestCase(1)]
-        [TestCase(2)]
-        [TestCase(4)]
+        private static int[] indivisibleInputs = new int[] { 
+            1, 2, 4, 7, 8, 11, 13
+        };
+
+        [TestCaseSource("indivisibleInputs")]
         public void Convert_WhenInputIsIndivisible_ReturnsNumberAsString(int number)
         {
             // Arrange
@@ -61,5 +64,12 @@ namespace FizzBuzz.Test
             Assert.AreEqual(expected, actual);
         }
 
+        [Test]
+        public void Convert_WhenInputIsZeroOrNegative_ThrowsArgumentException() 
+        {
+            FizzBuzzer fizzBuzzer = new FizzBuzzer();
+            int number = 0;
+            Assert.Throws<ArgumentException>(() => { fizzBuzzer.Convert(number); });        
+        }
     }
 }
